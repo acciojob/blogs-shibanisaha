@@ -30,25 +30,30 @@ public class UserService {
     }
 
     public void deleteUser(int userId){
-        User user = userRepository3.findById(userId).get();
-        List<Blog> blogList = user.getBlogList();
-
-            for(Blog b: blogList){
-                int id = b.getId();
-                List<Image> imageList = b.getImageList();
-                for (Image i: imageList){
-                    int imageID = i.getId();
-                    imageRepository.deleteById(imageID);
-                }
-                blogRepository.deleteById(id);
-            }
+//        User user = userRepository3.findById(userId).get();
+//        List<Blog> blogList = user.getBlogList();
+//
+//            for(Blog b: blogList){
+//                int id = b.getId();
+//                List<Image> imageList = b.getImageList();
+//                for (Image i: imageList){
+//                    int imageID = i.getId();
+//                    imageRepository.deleteById(imageID);
+//                }
+//                blogRepository.deleteById(id);
+//            }
 
 
         userRepository3.deleteById(userId);
     }
 
     public User updateUser(Integer id, String password){
-        User user = userRepository3.findById(id).get();
+        User user=null;
+        try{
+            user = userRepository3.findById(id).get();
+        }catch (Exception e){
+            return user;
+        }
         user.setPassword(password);
         userRepository3.save(user);
         return user;

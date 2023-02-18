@@ -18,9 +18,15 @@ public class ImageService {
     public Image addImage(Integer blogId, String description, String dimensions){
         //add an image to the blog
         Image image = new Image();
+        Blog blog;
+        try{
+            blog = blogRepository2.findById(blogId).get();
+        }catch (Exception e){
+            return image;
+        }
         image.setDescription(description);
         image.setDimensions(dimensions);
-        Blog blog = blogRepository2.findById(blogId).get();
+
         image.setBlog(blog);
 
         List<Image> listOfImage = blog.getImageList();
@@ -30,10 +36,10 @@ public class ImageService {
     }
 
     public void deleteImage(Integer id){
-    Image image = imageRepository2.findById(id).get();
-    Blog blog = image.getBlog();
-    List<Image> imageList = blog.getImageList();
-    imageList.remove(imageList.indexOf(image));
+//    Image image = imageRepository2.findById(id).get();
+//    Blog blog = image.getBlog();
+//    List<Image> imageList = blog.getImageList();
+//    imageList.remove(imageList.indexOf(image));
 
         imageRepository2.deleteById(id);
 
@@ -43,13 +49,27 @@ public class ImageService {
         //Find the number of images of given dimensions that can fit in a screen having `screenDimensions`
         Image image = imageRepository2.findById(id).get();
         String size = image.getDimensions();
-        int imageDimention1 = Integer.parseInt(size.substring(0,1));
-        int imageDimention2 = Integer.parseInt(size.substring(2));
-        int ScreenDimention1 = Integer.parseInt(screenDimensions.substring(0,1));
-        int ScreenDimention2 = Integer.parseInt(screenDimensions.substring(2));
-        int imageSize = imageDimention1*imageDimention2;
-        int totalSize = ScreenDimention1*ScreenDimention2;
+        int i = 0;
+        for(;i<screenDimensions.length();i++){
+            if(screenDimensions.charAt(i)=='X'){
+                break;
+            }
+        }
 
-        return totalSize/imageSize;
+        int j = 0;
+        for(;j<size.length();j++){
+            if(size.charAt(j)=='X'){
+                break;
+            }
+        }
+        int imageDimention1 = Integer.parseInt(size.substring(0,j));
+        int imageDimention2 = Integer.parseInt(size.substring(j+1));
+        int ScreenDimention1 = Integer.parseInt(screenDimensions.substring(0,i));
+        int ScreenDimention2 = Integer.parseInt(screenDimensions.substring(i+1));
+
+        int dim1 = ScreenDimention1/imageDimention1;
+        int dim2 = ScreenDimention2/imageDimention2;
+
+        return dim1*dim2;
     }
 }
