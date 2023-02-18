@@ -31,7 +31,7 @@ public class UserService {
 
     public void deleteUser(int userId){
         User user = userRepository3.findById(userId).get();
-        List<Blog> blogList = user.getBlogCreated();
+        List<Blog> blogList = user.getBlogList();
 
             for(Blog b: blogList){
                 int id = b.getId();

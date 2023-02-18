@@ -18,7 +18,7 @@ public class User {
 
     //bidirectional connection between user & blog;
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-    private List<Blog> blogCreated = new ArrayList<>();
+    private List<Blog> blogList = new ArrayList<>();
 
     ///////////////constructor///////////////////////////
 
@@ -67,11 +67,11 @@ public class User {
         this.lastName = lastName;
     }
 
-    public List<Blog> getBlogCreated() {
-        return blogCreated;
+    public List<Blog> getBlogList() {
+        return blogList;
     }
 
-    public void setBlogCreated(List<Blog> blogCreated) {
-        this.blogCreated = blogCreated;
+    public void setBlogList(List<Blog> blogList) {
+        this.blogList = blogList;
     }
 }
