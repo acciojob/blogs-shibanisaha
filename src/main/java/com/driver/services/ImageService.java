@@ -18,20 +18,18 @@ public class ImageService {
     public Image addImage(Integer blogId, String description, String dimensions){
         //add an image to the blog
         Image image = new Image();
-        Blog blog;
-        try{
-            blog = blogRepository2.findById(blogId).get();
-        }catch (Exception e){
-            return image;
-        }
-        image.setDescription(description);
-        image.setDimensions(dimensions);
+        Blog blog = blogRepository2.findById(blogId).get();;
+       if(blog !=null){
+           image.setDescription(description);
+           image.setDimensions(dimensions);
 
-        image.setBlog(blog);
+           image.setBlog(blog);
 
-        List<Image> listOfImage = blog.getImageList();
-        listOfImage.add(image);
-        blogRepository2.save(blog);
+           List<Image> listOfImage = blog.getImageList();
+           listOfImage.add(image);
+           blogRepository2.save(blog);
+       }
+
         return image;
     }
 
@@ -41,7 +39,8 @@ public class ImageService {
 //    List<Image> imageList = blog.getImageList();
 //    imageList.remove(imageList.indexOf(image));
 
-        imageRepository2.deleteById(id);
+
+            imageRepository2.deleteById(id);
 
     }
 
