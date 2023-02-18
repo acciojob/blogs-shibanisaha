@@ -27,7 +27,6 @@ public class BlogService {
         //create a blog at the current time
         User user = userRepository1.findById(userId).get();
         Blog blog = new Blog();
-        if(user !=null){
             blog.setTitle(title);
             blog.setContent(content);
 
@@ -35,7 +34,6 @@ public class BlogService {
             List<Blog> blogArrayList = user.getBlogList();
             blogArrayList.add(blog);
             userRepository1.save(user);
-        }
 
         return blog;
     }
